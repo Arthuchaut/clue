@@ -4,6 +4,7 @@
 from typing import Dict, List, Any
 
 from config.custom_type import WebClient
+from libs.stack_exchange import StackExchange
 
 async def task_search(**kwargs: Dict[str, Any]) -> None:
     """Print bot usage for the emitter.
@@ -21,9 +22,13 @@ async def task_search(**kwargs: Dict[str, Any]) -> None:
         response = usage
     else:
         tag: str = argv[2]
-        description: str = '&amp;'.join(argv[3:])
-
-        response = f'tag: {tag}\ndescription: {description}'
+        description: str = '%20'.join(argv[3:])
+        
+        response = StackExchange.api_search(
+            sort='votes',
+            q=description,
+            tagged=tag
+        )
 
     await web_client.chat_postMessage(
         channel=kwargs['data']['channel'],
