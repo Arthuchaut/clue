@@ -3,11 +3,13 @@
 It import the config file and setup the logger.
 """
 
+import os
 from typing import Dict, Any
 
 import yaml
 
-CONFIG: Dict[str, Any] = yaml.safe_load(open('config.yml', 'r'))
+here: str = os.path.dirname(os.path.realpath(__file__))
+CONFIG: Dict[str, Any] = yaml.safe_load(open(here + '/../config.yml', 'r'))
 
 def init_app() -> None:
     """The application configuration initializer.
@@ -43,3 +45,8 @@ def init_app() -> None:
         )
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
+
+
+print(f'configure imported as name as `{__name__}`')
+
+init_app()
