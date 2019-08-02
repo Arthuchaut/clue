@@ -1,0 +1,7 @@
+# Project dependencies
+slackclient
+requests
+pyyaml
+
+# Development tools
+pylint
