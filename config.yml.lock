@@ -1,0 +1,11 @@
+api:
+  slack:
+    token: <SLACK_BOT_TOKEN>
+
+logger:
+  file_handler: True
+  console_handler: True
+  file_name: logs/tracing.log
+  formatter: '[%(asctime)s][%(name)s][%(levelname)s] %(message)s'
+  file_level: DEBUG
+  console_level: DEBUG
