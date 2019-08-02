@@ -5,6 +5,7 @@ from typing import NewType
 import asyncio
 
 import slack
+import requests
 
 _WindowsSelectorEventLoop = NewType(
     '_WindowsSelectorEventLoop',
@@ -13,3 +14,4 @@ _WindowsSelectorEventLoop = NewType(
 
 RTMClient = NewType('RTMClient', slack.RTMClient)
 WebClient = NewType('WebClient', slack.WebClient)
+Response = NewType('Response', requests.models.Response)
