@@ -8,7 +8,7 @@ import logging
 import slack
 
 from config.custom_type import (
-    _WindowsSelectorEventLoop,
+    EventLoop,
     RTMClient,
     WebClient
 )
@@ -22,7 +22,7 @@ class RTMDispatcher:
         """
 
         self.__stack: Dict[str, Awaitable[Dict[str, Any]]] = {}
-        self.__loop: _WindowsSelectorEventLoop = asyncio.get_event_loop()
+        self.__loop: EventLoop = asyncio.get_event_loop()
         self.__rtm_client: RTMClient = slack.RTMClient(
             token=token,
             run_async=True

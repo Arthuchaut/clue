@@ -16,8 +16,10 @@ async def task_search(**kwargs: Dict[str, Any]) -> None:
 
     web_client: WebClient = kwargs['web_client']
     argv: List[str] = kwargs['data']['argv']
-    usage: str = '```Usage: search <lang> <problem description>```'
     response: str = None
+    usage: str = '```Usage: search <lang> <problem description>```'
+    error: str = 'Sorry, no response found ' + \
+                 'for your question... :confused:'
 
     if len(argv) < 4:
         response = usage
@@ -34,8 +36,7 @@ async def task_search(**kwargs: Dict[str, Any]) -> None:
         try:
             question_id: int = res['items'][0]['question_id']
         except (KeyError, IndexError):
-            response = 'Sorry, no response found ' + \
-                       'for your question... :confused:'
+            response = error
         else:
             res: Dict[str, Any] = StackExchange.api_questions_answers(
                 question_id=question_id,
@@ -44,10 +45,9 @@ async def task_search(**kwargs: Dict[str, Any]) -> None:
             )
 
             try:
-                response = '>>>' + res['items'][0]['body_markdown']
+                response = res['items'][0]['body_markdown']
             except (KeyError, IndexError):
-                response = 'Sorry, no response found ' + \
-                           'for your question... :confused:'
+                response = error
 
     await web_client.chat_postMessage(
         channel=kwargs['data']['channel'],
